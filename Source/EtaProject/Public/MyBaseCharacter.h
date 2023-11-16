@@ -4,22 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "InputActionValue.h"
-#include "BaseCharacter.generated.h"
+#include "Kismet/GameplayStatics.h"
+#include "MyBaseCharacter.generated.h"
 
 UCLASS()
-class ETAPROJECT_API ABaseCharacter : public ACharacter
+class ETAPROJECT_API AMyBaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	ABaseCharacter();
+	AMyBaseCharacter();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 	
 
 public:	
@@ -29,7 +28,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//virtual float TakeDamage(AActor* DamagedActor, float BaseDamage, FVector const& HitFromDirection, FHitResult const& HitInfo, AController* EvenInstigator) override;
+	//void Damaged(AActor* DamagedActor, float BaseDamage, FVector const& HitFromDirection, FHitResult const& HitInfoAController AController* EvenInstigator);
 
-public:
-	
 };
