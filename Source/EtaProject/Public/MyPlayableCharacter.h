@@ -14,7 +14,7 @@ class ETAPROJECT_API AMyPlayableCharacter : public AMyBaseCharacter
 {
 	GENERATED_BODY()
 	
-
+	
 
 public:
 	AMyPlayableCharacter();
@@ -30,6 +30,5 @@ public:
 	void CheckJump();
 	bool bIsJumping;
 
-	
 
 };

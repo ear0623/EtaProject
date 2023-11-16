@@ -2,13 +2,15 @@
 
 
 #include "MyBaseCharacter.h"
+#include <Engine/DamageEvents.h>
 
 // Sets default values
 AMyBaseCharacter::AMyBaseCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	AActor::PrimaryActorTick.bCanEverTick = true;
 
+	HP = DefaultHP;
 }
 
 // Called when the game starts or when spawned
@@ -30,6 +32,16 @@ void AMyBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+float AMyBaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	DefaultHP -= DamageAmount;
+	if (DefaultHP <= 0)
+	{
+		//setsimulatePhysics
+	}
+	return DamageAmount;
 }
 
 
