@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "MyBaseCharacter.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 #include "MyPlayableCharacter.generated.h"
 
 /**
@@ -13,6 +15,16 @@ UCLASS()
 class ETAPROJECT_API AMyPlayableCharacter : public AMyBaseCharacter
 {
 	GENERATED_BODY()
+	
+protected:
+	
+	UPROPERTY(BluePrintreadOnly, Category = "Camera")
+	class USpringArmComponent* SpringArm;
+	UPROPERTY(BluePrintreadOnly, Category = "Camera")
+	class UCameraComponent* Camera;
+	UPROPERTY(BlueprintReadWrite, Category ="Camera")
+	float ArmLenthValue;
+	
 	
 	
 
@@ -29,6 +41,8 @@ public:
 	void MouseMoveY(float Inputvalue);
 	void CheckJump();
 	bool bIsJumping;
+
+
 
 
 };

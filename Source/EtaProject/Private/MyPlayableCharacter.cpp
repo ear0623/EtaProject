@@ -8,6 +8,16 @@ AMyPlayableCharacter::AMyPlayableCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	bIsJumping = false;
+
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraSpringArm"));
+	SpringArm->SetupAttachment(GetRootComponent());
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(SpringArm);
+	
+	SpringArm->TargetArmLength = 400.0f;
+	SpringArm->SetRelativeLocation(FVector(0.0f,0.0f,50.0f));
+
+
 }
 
 void AMyPlayableCharacter::Tick(float DeltaTime)
@@ -64,10 +74,5 @@ void AMyPlayableCharacter::CheckJump()
 	}
 }
 
-float AMyPlayableCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
-{
-
-	return 0.0f;
-}
 
 

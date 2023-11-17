@@ -11,6 +11,8 @@ AMyBaseCharacter::AMyBaseCharacter()
 	AActor::PrimaryActorTick.bCanEverTick = true;
 
 	HP = DefaultHP;
+
+	
 }
 
 // Called when the game starts or when spawned
