@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/StaticMeshComponent.h"
+#include "Animation/AnimMontage.h"
 #include "MyBaseCharacter.generated.h"
 
 UCLASS()
@@ -25,9 +26,23 @@ protected:
 	UPROPERTY(EditAnywhere,Category="HP")
 	float DefaultHP = 10;
 
-	UPROPERTY(EditAnywhere,Category="StaticMesh")
+	UPROPERTY(VisibleAnywhere,Category="StaticMesh")
 	class UStaticMeshComponent* WeaponStaticMesh;
+
+	UPROPERTY(EditAnywhere, Category="Animation")
+	class UAnimMontage* AtaackAnimMontage;
+
+
+
+
+	
+	
+	bool bIsAttacking;
+	void SecondAttack();
 	//class FHitResult MyHitResult;
+
+	void AttackAction();
+
 
 public:	
 	// Called every frame
@@ -38,4 +53,6 @@ public:
 
 	float TakeDamage(float DamageAmount,struct FDamageEvent const& DamageEvent,class AController* EventInstigator,AActor* DamageCauser) override;
 	//bool LineTrace(struct FHitResult& OutHit,const FVector& Start,const FVector& End,ECollisionChannel TraceChannel,const FCollisionQueryParams& Params,const FCollisionResponseParams& ResponseParam);
+
+
 };

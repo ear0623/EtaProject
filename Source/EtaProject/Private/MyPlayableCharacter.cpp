@@ -55,6 +55,7 @@ void AMyPlayableCharacter::MoveRight(float InputValue)
 void AMyPlayableCharacter::MouseMoveX(float InputValue)
 {
 	AddControllerYawInput(InputValue);
+
 }
 
 void AMyPlayableCharacter::MouseMoveY(float InputValue)

@@ -11,7 +11,9 @@ AMyBaseCharacter::AMyBaseCharacter()
 	AActor::PrimaryActorTick.bCanEverTick = true;
 
 	HP = DefaultHP;
-
+	bIsAttacking = false;
+	WeaponStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SwordMesh"));
+	WeaponStaticMesh->SetupAttachment(GetMesh(), FName("RightHand_Weapons"));
 	
 }
 
@@ -19,8 +21,45 @@ AMyBaseCharacter::AMyBaseCharacter()
 void AMyBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+
+}
+
+void AMyBaseCharacter::SecondAttack()
+{
 	
 }
+
+void AMyBaseCharacter::AttackAction()
+{
+	
+		if (bIsAttacking ==false)
+		{
+			bIsAttacking = true;
+			UAnimInstance* AnimInstance;
+			AnimInstance = GetMesh()->GetAnimInstance();
+			
+			if (AnimInstance != nullptr&&AtaackAnimMontage !=nullptr)
+			{
+				AnimInstance->Montage_Play(AtaackAnimMontage,1.0f,EMontagePlayReturnType::MontageLength,0.0f,true);
+				//printstring
+				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("montage_Play"));
+			}
+			else
+			{
+
+			}
+			
+			
+		}
+		else
+		{
+
+		}
+		bIsAttacking = false;
+}
+
+
 
 // Called every frame
 void AMyBaseCharacter::Tick(float DeltaTime)
@@ -33,6 +72,11 @@ void AMyBaseCharacter::Tick(float DeltaTime)
 void AMyBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+
+
+	PlayerInputComponent->BindAction("Attack", IE_Pressed,this,&AMyBaseCharacter::AttackAction);
+
 
 }
 
