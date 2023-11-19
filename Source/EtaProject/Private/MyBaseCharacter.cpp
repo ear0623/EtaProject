@@ -41,7 +41,10 @@ void AMyBaseCharacter::AttackAction()
 			
 			if (AnimInstance != nullptr&&AtaackAnimMontage !=nullptr)
 			{
-				AnimInstance->Montage_Play(AtaackAnimMontage,1.0f,EMontagePlayReturnType::MontageLength,0.0f,true);
+				AnimInstance->Montage_Play(AtaackAnimMontage,1.0f, EMontagePlayReturnType::Duration,0.0f,true);
+				
+				
+				//AnimInstance->Montage_Stop(2.26f, AtaackAnimMontage);
 				//printstring
 				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("montage_Play"));
 			}

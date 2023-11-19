@@ -9,6 +9,16 @@
 #include "Animation/AnimMontage.h"
 #include "MyBaseCharacter.generated.h"
 
+UENUM(BlueprintType)
+enum class AttackCombo : uint8
+{
+	None UMETA(DisplayName = "NONE"),
+	Attack01 UMETA(DisplayName = "Attack01"),
+	Attack02 UMETA(Displayname = "Attack02"),
+};
+
+
+
 UCLASS()
 class ETAPROJECT_API AMyBaseCharacter : public ACharacter
 {

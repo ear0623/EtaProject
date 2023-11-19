@@ -3,6 +3,7 @@
 
 #include "MyPlayableCharacter.h"
 
+
 AMyPlayableCharacter::AMyPlayableCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
