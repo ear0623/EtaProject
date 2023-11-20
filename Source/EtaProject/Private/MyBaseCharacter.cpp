@@ -42,6 +42,7 @@ void AMyBaseCharacter::AttackAction()
 			if (AnimInstance != nullptr&&AtaackAnimMontage !=nullptr)
 			{
 				AnimInstance->Montage_Play(AtaackAnimMontage,1.0f, EMontagePlayReturnType::Duration,0.0f,true);
+				//AnimInstance->Montage_JumpToSection(,AtaackAnimMontage);
 				
 				
 				//AnimInstance->Montage_Stop(2.26f, AtaackAnimMontage);
