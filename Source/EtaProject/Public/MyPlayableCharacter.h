@@ -41,6 +41,7 @@ public:
 	void MouseMoveX(float InputValue);
 	void MouseMoveY(float Inputvalue);
 	void CheckJump();
+	UPROPERTY(BlueprintReadOnly,Category="Move")
 	bool bIsJumping;
 
 

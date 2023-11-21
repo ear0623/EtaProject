@@ -30,17 +30,17 @@ void AMyBaseCharacter::BeginPlay()
 
 void AMyBaseCharacter::MyTraceSingleByChannel()
 {
-	FHitResult* MyHitResult=nullptr;
+	FHitResult MyHitResult;
 	FVector StartLocation = WeaponStaticMesh->GetSocketLocation(FName("LineTraceStartPoint"));
 	FVector EndLocation = WeaponStaticMesh->GetSocketLocation(FName("LineTraceEndPoint"));
 	FCollisionQueryParams TraceParams;
 	TraceParams.AddIgnoredActor(this);
 	TraceParams.AddIgnoredComponent(WeaponStaticMesh);
 
-	bool Hit= GetWorld()->LineTraceSingleByChannel(*MyHitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
+	bool Hit= GetWorld()->LineTraceSingleByChannel(MyHitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("LinetraceOn"));
 
-	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 2.0f);
+	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 1.0f,0,12.333);
 }
 
 void AMyBaseCharacter::SecondAttack()
@@ -60,6 +60,9 @@ void AMyBaseCharacter::AttackAction()
 			if (AnimInstance != nullptr&&AtaackAnimMontage !=nullptr)
 			{
 				AnimInstance->Montage_Play(AtaackAnimMontage,1.0f, EMontagePlayReturnType::Duration,0.0f,true);
+					MyTraceSingleByChannel();
+				
+				
 				//AnimInstance->Montage_JumpToSection(,AtaackAnimMontage);
 				
 				
@@ -88,6 +91,7 @@ void AMyBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
 }
 
 // Called to bind functionality to input

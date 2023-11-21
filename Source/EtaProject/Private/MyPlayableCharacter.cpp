@@ -26,6 +26,7 @@ void AMyPlayableCharacter::Tick(float DeltaTime)
 	if (bIsJumping)
 	{
 		Jump();
+		AddMovementInput(FVector(0, 0, 0), 0);
 	}
 }
 
