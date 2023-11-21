@@ -24,7 +24,8 @@ protected:
 	class UCameraComponent* Camera;
 	UPROPERTY(BlueprintReadWrite, Category ="Camera")
 	float ArmLenthValue;
-	
+	//UFUNCTION(BlueprintCallable)
+	//virtual void MyTraceSingleByChannel() override;
 	
 	
 

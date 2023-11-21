@@ -9,6 +9,7 @@
 #include "Animation/AnimMontage.h"
 #include "MyBaseCharacter.generated.h"
 
+
 UENUM(BlueprintType)
 enum class AttackCombo : uint8
 {
@@ -42,16 +43,18 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Animation")
 	class UAnimMontage* AtaackAnimMontage;
 
-
+	UFUNCTION(BlueprintCallable)
+	void MyTraceSingleByChannel();
 
 
 	
 	
 	bool bIsAttacking;
 	void SecondAttack();
-	//class FHitResult MyHitResult;
-
+	
 	void AttackAction();
+
+	
 
 
 public:	
@@ -62,7 +65,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	float TakeDamage(float DamageAmount,struct FDamageEvent const& DamageEvent,class AController* EventInstigator,AActor* DamageCauser) override;
-	//bool LineTrace(struct FHitResult& OutHit,const FVector& Start,const FVector& End,ECollisionChannel TraceChannel,const FCollisionQueryParams& Params,const FCollisionResponseParams& ResponseParam);
-
+	
+	
 
 };

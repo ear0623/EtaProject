@@ -3,6 +3,8 @@
 
 #include "MyBaseCharacter.h"
 #include <Engine/DamageEvents.h>
+#include "Engine/World.h"
+
 
 // Sets default values
 AMyBaseCharacter::AMyBaseCharacter()
@@ -22,7 +24,23 @@ void AMyBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	
+	
+}
 
+void AMyBaseCharacter::MyTraceSingleByChannel()
+{
+	FHitResult* MyHitResult=nullptr;
+	FVector StartLocation = WeaponStaticMesh->GetSocketLocation(FName("LineTraceStartPoint"));
+	FVector EndLocation = WeaponStaticMesh->GetSocketLocation(FName("LineTraceEndPoint"));
+	FCollisionQueryParams TraceParams;
+	TraceParams.AddIgnoredActor(this);
+	TraceParams.AddIgnoredComponent(WeaponStaticMesh);
+
+	bool Hit= GetWorld()->LineTraceSingleByChannel(*MyHitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("LinetraceOn"));
+
+	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 2.0f);
 }
 
 void AMyBaseCharacter::SecondAttack()
