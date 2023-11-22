@@ -3,20 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/UserDefinedEnum.h"
-#include "E_AttackTypeEnum.generated.h"
+#include "GameFramework/PlayerController.h"
+#include "MyPlayerController.generated.h"
 
 /**
  * 
  */
-
-
 UCLASS()
-class ETAPROJECT_API UE_AttackTypeEnum : public UUserDefinedEnum
+class ETAPROJECT_API AMyPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
-	
-	
 	
 };

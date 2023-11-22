@@ -3,20 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/UserDefinedEnum.h"
-#include "E_AttackTypeEnum.generated.h"
+#include "GameFramework/HUD.h"
+#include "MyHUD.generated.h"
 
 /**
  * 
  */
-
-
 UCLASS()
-class ETAPROJECT_API UE_AttackTypeEnum : public UUserDefinedEnum
+class ETAPROJECT_API AMyHUD : public AHUD
 {
 	GENERATED_BODY()
-
-	
-	
 	
 };

@@ -3,20 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/UserDefinedEnum.h"
-#include "E_AttackTypeEnum.generated.h"
+#include "GameFramework/GameModeBase.h"
+#include "MyGameModeBase.generated.h"
 
 /**
  * 
  */
-
-
 UCLASS()
-class ETAPROJECT_API UE_AttackTypeEnum : public UUserDefinedEnum
+class ETAPROJECT_API AMyGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
-	
-	
+	AMyGameModeBase();
 	
 };
