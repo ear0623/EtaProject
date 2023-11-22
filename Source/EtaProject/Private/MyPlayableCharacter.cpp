@@ -45,8 +45,12 @@ void AMyPlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 void AMyPlayableCharacter::MoveFoward(float InputValue)
 {
-	FVector MoveFoward = GetActorForwardVector();
-	AddMovementInput(MoveFoward, InputValue);
+	if (InputValue != 0.0f)
+	{
+		FVector MoveFoward = GetActorForwardVector();
+		AddMovementInput(MoveFoward, InputValue);
+	}
+	
 }
 
 void AMyPlayableCharacter::MoveRight(float InputValue)

@@ -3,17 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/HUD.h"
-#include "MyHUD.generated.h"
+#include "GameFramework/GameStateBase.h"
+#include "MyGameStateBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ETAPROJECT_API AMyHUD : public AHUD
+class ETAPROJECT_API AMyGameStateBase : public AGameStateBase
 {
 	GENERATED_BODY()
-
-	AMyHUD();
 	
 };

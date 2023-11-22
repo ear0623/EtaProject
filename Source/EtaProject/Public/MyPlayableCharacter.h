@@ -8,6 +8,8 @@
 #include "Camera/CameraComponent.h"
 #include "MyPlayableCharacter.generated.h"
 
+class AMyPlayerController;
+
 /**
  * 
  */
@@ -18,14 +20,18 @@ class ETAPROJECT_API AMyPlayableCharacter : public AMyBaseCharacter
 	
 protected:
 	
-	UPROPERTY(BluePrintreadOnly, Category = "Camera")
+	UPROPERTY(VisibleAnywhere,BluePrintreadOnly, Category = "Camera",meta=(AllowPrivateAccess ="true"))
 	class USpringArmComponent* SpringArm;
-	UPROPERTY(BluePrintreadOnly, Category = "Camera")
+	UPROPERTY(VisibleAnywhere,BluePrintreadOnly, Category = "Camera",meta=(AlowwPrivateAccess = "tue"))
 	class UCameraComponent* Camera;
 	UPROPERTY(BlueprintReadWrite, Category ="Camera")
 	float ArmLenthValue;
-	//UFUNCTION(BlueprintCallable)
-	//virtual void MyTraceSingleByChannel() override;
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Character")
+	float BaseTurnRate;
+	UPROPERTY()
+	AMyPlayerController* MyPlayerCharacter;
+
+
 	
 	
 
@@ -43,6 +49,7 @@ public:
 	void CheckJump();
 	UPROPERTY(BlueprintReadOnly,Category="Move")
 	bool bIsJumping;
+
 
 
 

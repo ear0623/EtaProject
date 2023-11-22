@@ -10,7 +10,7 @@ AMyGameModeBase::AMyGameModeBase()
 	ConstructorHelpers::FClassFinder<AMyPlayerController>PlayerControllerClassFinder(TEXT("/Script/EtaProject.MyPlayerController"));
 	PlayerControllerClass = PlayerControllerClassFinder.Class;
 
-	ConstructorHelpers::FClassFinder<AMyHUD> HUDClassFinder(TEXT("/Script/CoreUObject.Class'/Script/EtaProject.MyHUD"));
+	ConstructorHelpers::FClassFinder<AMyHUD> HUDClassFinder(TEXT("/Script/EtaProject.MyHUD"));
 	HUDClass = HUDClassFinder.Class;
 
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Script/CoreUObject.Class"));
