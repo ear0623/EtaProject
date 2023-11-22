@@ -11,30 +11,31 @@ ABaseItemActor::ABaseItemActor()
 
 }
 
-FText ABaseItemActor::GetUseActionText_Implementtation()
+FText ABaseItemActor::GetUseActionText_Implementation()
 {
 	return FText();
 }
 
-bool ABaseItemActor::GetIsUseable_Implementtation()
+bool ABaseItemActor::GetIsActorUsable_Implementation()
 {
 	return false;
 }
 
-bool ABaseItemActor::BeginOutLineFocus_Implementtation()
+bool ABaseItemActor::BeginOutLineFocus_Implementation()
 {
 	return false;
 }
 
-bool ABaseItemActor::EndOutLineFocus_Implementtation()
+bool ABaseItemActor::EndOtLineFocus_Implementation()
 {
 	return false;
 }
 
-bool ABaseItemActor::OnActorUsed_Implementtation(APlayerController* Controller)
+bool ABaseItemActor::OnActorUse_Implementation(APlayerController* Controller)
 {
 	return false;
 }
+
 
 // Called when the game starts or when spawned
 void ABaseItemActor::BeginPlay()
@@ -48,10 +49,6 @@ void ABaseItemActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-}
-
-void ABaseItemActor::GetLifeTimeRepLicatedProps(TArray<FLifetimeProperty>& outLifeTimeProps) const
-{
 }
 
 bool ABaseItemActor::OnWasUsed()

@@ -4,13 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Sound/SoundCue.h"
-#include "Internationalization/StringTableRegistry.h"
-#include "ABaseItemActor.generated.h"
+#include "UBaseItemInterface.h"
+#include "BaseItemActor.generated.h"
+
+class Scene;
+class UStaticMeshComponent;
+class FText;
+class UUserWidget;
 
 
 UCLASS()
-class ETAPROJECT_API ABaseItemActor : public AActor, public ABaseItemActor
+class ETAPROJECT_API ABaseItemActor : public AActor, public IUBaseItemInterface
 {
 	GENERATED_BODY()
 	
@@ -19,11 +23,11 @@ public:
 	ABaseItemActor();
 
 	//Interface begine
-	virtual FText GetUseActionText_Implementtation()override;
-	virtual bool GetIsUseable_Implementtation() override;
-	virtual bool BeginOutLineFocus_Implementtation() override;
-	virtual bool EndOutLineFocus_Implementtation() override;
-	virtual bool OnActorUsed_Implementtation(APlayerController* Controller) override;
+	virtual FText GetUseActionText_Implementation()override;
+	virtual bool GetIsActorUsable_Implementation() override;
+	virtual bool BeginOutLineFocus_Implementation() override;
+	virtual bool  EndOtLineFocus_Implementation() override;
+	virtual bool OnActorUse_Implementation(APlayerController* Controller) override;
 	//end
 
 protected:
@@ -33,30 +37,29 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USceneComponent* Scene;
 
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* StaticMesh;
 
 	UPROPERTY(Replicated)
 	FText Name;
 
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText Action;
 
-	UPROPERTY(EditAnywhere,BlueprintReadwrite)
+	UPROPERTY(EditAnywhere, BlueprintReadwrite)
 	USoundCue* UsedSound;
 
-	UPROPERTY(EditAnywhere,BlueprintReadWrite,Replicated)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated)
 	bool IsUsable;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,ReplicatedUsing="OnRep_WasUsed")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool WasUsed;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void GetLifeTimeRepLicatedProps(TArray<FLifetimeProperty>& outLifeTimeProps) const override;
-
+	
 	UFUNCTION(BlueprintCallable, meta = (Category, OverrideNativeName = "OnwasUsed"))
 	virtual bool OnWasUsed();
 
