@@ -39,8 +39,11 @@ void AMyBaseCharacter::MyTraceSingleByChannel()
 
 	bool Hit= GetWorld()->LineTraceSingleByChannel(MyHitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("LinetraceOn"));
-
-	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 1.0f,0,12.333);
+	for (int i = 0; i < 10; i++)
+	{
+		DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 1.0f, 0, 5.333);
+	}
+	
 }
 
 void AMyBaseCharacter::SecondAttack()

@@ -28,7 +28,7 @@ void AMyPlayableCharacter::Tick(float DeltaTime)
 		Jump();
 		AddMovementInput(FVector(0, 0, 0), 0);
 	}
-	AMyBaseCharacter::MyTraceSingleByChannel();
+	//AMyBaseCharacter::MyTraceSingleByChannel();
 }
 
 void AMyPlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
