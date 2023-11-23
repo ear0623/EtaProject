@@ -6,6 +6,7 @@
 #include "MyBaseCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Components/SceneCaptureComponent2D.h"
 #include "MyPlayableCharacter.generated.h"
 
 class AMyPlayerController;
@@ -30,7 +31,10 @@ protected:
 	float BaseTurnRate;
 	UPROPERTY()
 	AMyPlayerController* MyPlayerCharacter;
-
+	UPROPERTY(EditAnywhere,Category="MiniMap",meta=(AllowPrivateAccess="true"))
+	class USpringArmComponent* MinimapSpringArm;
+	UPROPERTY(EditAnywhere, Category = "MiniMap", meta = (AlowwPrivateAccess = "tue"))
+	class USceneCaptureComponent2D* Minimap;
 
 	
 	

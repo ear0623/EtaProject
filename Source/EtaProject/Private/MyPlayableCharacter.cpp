@@ -18,6 +18,11 @@ AMyPlayableCharacter::AMyPlayableCharacter()
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeLocation(FVector(0.0f,0.0f,50.0f));
 
+	MinimapSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MiniMapSpringArm"));
+	MinimapSpringArm->SetupAttachment(GetRootComponent());
+	Minimap->SetupAttachment(MinimapSpringArm);
+	
+
 
 }
 
