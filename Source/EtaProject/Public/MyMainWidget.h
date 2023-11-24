@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "UWidgetInterface.h"
 #include "MyMainWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ETAPROJECT_API UMyMainWidget : public UUserWidget
+class ETAPROJECT_API UMyMainWidget : public UUserWidget, public IUWidgetInterface
 {
 	GENERATED_BODY()
 	
@@ -38,4 +39,10 @@ public:
 
 	UPROPERTY(BlueprintReadWrite,meta = (BindWidget))
 	class UButton* Exit;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void FStartLevel()override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void FExit()override;
 };

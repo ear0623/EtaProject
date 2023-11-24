@@ -23,7 +23,7 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere,BluePrintreadOnly, Category = "Camera",meta=(AllowPrivateAccess ="true"))
 	class USpringArmComponent* SpringArm;
-	UPROPERTY(VisibleAnywhere,BluePrintreadOnly, Category = "Camera",meta=(AlowwPrivateAccess = "tue"))
+	UPROPERTY(VisibleAnywhere,BluePrintreadOnly, Category = "Camera",meta=(AlowwPrivateAccess = "true"))
 	class UCameraComponent* Camera;
 	UPROPERTY(BlueprintReadWrite, Category ="Camera")
 	float ArmLenthValue;
