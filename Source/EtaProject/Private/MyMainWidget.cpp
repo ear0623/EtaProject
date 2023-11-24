@@ -32,8 +32,9 @@ void UMyMainWidget::FOptionOpen()
 
 void UMyMainWidget::FResolve01()
 {
-	
-
+	GEngine->GameUserSettings->SetScreenResolution();
+	GEngine->GameUserSettings->SetFullscreenMode(EWindowMode::Windowed);
+	GEngine->GameUserSettings->ApplyResolutionSettings(true);
 }
 void UMyMainWidget::FResolve02()
 {
