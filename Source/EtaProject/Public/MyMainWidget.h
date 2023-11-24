@@ -45,4 +45,16 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void FExit()override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void FOptionOpen()override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void FResolve01()override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void FResolve02()override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void FResolve03()override;
 };

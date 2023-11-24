@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MyPlayerController.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "GameFramework/GameUserSettings.h"
 
 void UMyMainWidget::FStartLevel()
 {
@@ -23,3 +24,15 @@ void UMyMainWidget::FExit()
 
 	UKismetSystemLibrary::QuitGame(GetWorld(),MyPlayerController, EQuitPreference::Quit, false);
 }
+
+void UMyMainWidget::FOptionOpen()
+{
+
+}
+
+void UMyMainWidget::FResolve01()
+{
+	
+
+}
+//12801024
