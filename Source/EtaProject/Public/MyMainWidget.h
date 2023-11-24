@@ -16,11 +16,16 @@ class ETAPROJECT_API UMyMainWidget : public UUserWidget, public IUWidgetInterfac
 	GENERATED_BODY()
 	
 public:
+	
+	
 	UPROPERTY(meta= (BindWidget))
 	class UCanvasPanel* BackGround;
 
 	UPROPERTY(meta =(BindWidget))
 	class UVerticalBox* MenuBar;
+
+	UPROPERTY(meta = (BindWidget))
+	class UVerticalBox* OptionBar;
 
 	UPROPERTY(BlueprintReadWrite,meta=(BindWidget))
 	class UTextBlock* TextStart;
@@ -40,6 +45,30 @@ public:
 	UPROPERTY(BlueprintReadWrite,meta = (BindWidget))
 	class UButton* Exit;
 
+	UPROPERTY(BlueprintReadWrite,meta =(BindWidget))
+	class UTextBlock* OptionBarText01;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* OptionBarText02;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* OptionBarText03;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* BackText;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* Option01_Button;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* Option02_Button;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* Option03_Button;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* Back_Button;
+
 	UFUNCTION(BlueprintCallable)
 	virtual void FStartLevel()override;
 
@@ -57,4 +86,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void FResolve03()override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void Back()override;
 };

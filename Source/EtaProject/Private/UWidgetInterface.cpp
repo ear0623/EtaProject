@@ -30,3 +30,7 @@ void IUWidgetInterface::FResolve02()
 void IUWidgetInterface::FResolve03()
 {
 }
+
+void IUWidgetInterface::Back()
+{
+}

@@ -5,7 +5,10 @@
 #include "Kismet/GameplayStatics.h"
 #include "MyPlayerController.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Components/VerticalBox.h"
 #include "GameFramework/GameUserSettings.h"
+
+
 
 void UMyMainWidget::FStartLevel()
 {
@@ -27,19 +30,41 @@ void UMyMainWidget::FExit()
 
 void UMyMainWidget::FOptionOpen()
 {
-
+	if (MenuBar)
+	{
+		MenuBar->SetVisibility(ESlateVisibility::Hidden);
+		OptionBar->SetVisibility(ESlateVisibility::Visible);
+	}
+	
 }
 
 void UMyMainWidget::FResolve01()
 {
-	GEngine->GameUserSettings->SetScreenResolution();
-	GEngine->GameUserSettings->SetFullscreenMode(EWindowMode::Windowed);
-	GEngine->GameUserSettings->ApplyResolutionSettings(true);
+	FIntPoint Option01(640, 480);
+	UGameUserSettings* gameUserSetting= UGameUserSettings::GetGameUserSettings();
+	gameUserSetting->SetScreenResolution(Option01);
+	gameUserSetting->SetFullscreenMode(EWindowMode::Windowed);
+	gameUserSetting->ApplyResolutionSettings(true);	
 }
 void UMyMainWidget::FResolve02()
 {
+	FIntPoint Option02(1024, 768);
+	UGameUserSettings* gameUserSetting = UGameUserSettings::GetGameUserSettings();
+	gameUserSetting->SetScreenResolution(Option02);
+	gameUserSetting->SetFullscreenMode(EWindowMode::Windowed);
+	gameUserSetting->ApplyResolutionSettings(true);
 }
 void UMyMainWidget::FResolve03()
 {
+	FIntPoint Option03(1280, 960);
+	UGameUserSettings* gameUserSetting = UGameUserSettings::GetGameUserSettings();
+	gameUserSetting->SetScreenResolution(Option03);
+	gameUserSetting->SetFullscreenMode(EWindowMode::Windowed);
+	gameUserSetting->ApplyResolutionSettings(true);
+}
+void UMyMainWidget::Back()
+{
+	MenuBar->SetVisibility(ESlateVisibility::Visible);
+	OptionBar->SetVisibility(ESlateVisibility::Hidden);
 }
 //12801024
