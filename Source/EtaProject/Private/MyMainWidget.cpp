@@ -35,4 +35,10 @@ void UMyMainWidget::FResolve01()
 	
 
 }
+void UMyMainWidget::FResolve02()
+{
+}
+void UMyMainWidget::FResolve03()
+{
+}
 //12801024
