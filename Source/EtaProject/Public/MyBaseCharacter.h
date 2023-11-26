@@ -57,7 +57,7 @@ protected:
 
 	bool bIsAttacking;
 	void SecondAttack();
-	void AttackAction();
+	virtual void AttackAction();
 
 	
 

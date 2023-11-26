@@ -86,34 +86,6 @@ void AMyBaseCharacter::SecondAttack()
 void AMyBaseCharacter::AttackAction()
 {
 	
-		if (bIsAttacking ==false)
-		{
-			bIsAttacking = true;
-			UAnimInstance* AnimInstance;
-			AnimInstance = GetMesh()->GetAnimInstance();
-			
-			if (AnimInstance != nullptr&&AttackAnimMontage !=nullptr)
-			{
-				AnimInstance->Montage_Play(AttackAnimMontage,1.0f, EMontagePlayReturnType::Duration,0.0f,true);
-			
-				
-
-				//printstring
-				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("montage_Play"));
-			}
-			else
-			{
-
-			}
-			
-			
-		}
-		else
-		{
-
-		}
-		bIsAttacking = false;
-
 }
 
 

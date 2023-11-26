@@ -53,10 +53,12 @@ public:
 	void MouseMoveX(float InputValue);
 	void MouseMoveY(float Inputvalue);
 	void CheckJump();
+	void AttackMotion();
 	UPROPERTY(BlueprintReadOnly,Category="Move")
 	bool bIsJumping;
+	bool bIsAttack;
 
-
+	virtual void AttackAction()override;
 
 
 
