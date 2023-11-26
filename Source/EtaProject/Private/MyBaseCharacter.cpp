@@ -46,11 +46,14 @@ float AMyBaseCharacter::MyTraceSingleByChannel()
 	
 	if (ReturnLintrece)
 	{
+		
 		if (Doonce == false)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("True"));
 			Doonce = true;
-			return HitedActor(HitDamage, ReturnLintrece);
+			//HitedActor(HitDamage, ReturnLintrece);
+			MyHitResult.GetActor()->K2_DestroyActor();
+			
 		}
 		else
 		{
@@ -70,6 +73,7 @@ float AMyBaseCharacter::MyTraceSingleByChannel()
 
 float AMyBaseCharacter::HitedActor(float Hitdamaged, bool Trace)
 {
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Parant"));
 	return DefaultHP;
 }
 

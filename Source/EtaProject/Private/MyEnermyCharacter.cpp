@@ -10,14 +10,20 @@ AMyEnermyCharacter::AMyEnermyCharacter()
 
 float AMyEnermyCharacter::HitedActor(float Hitdamaged, bool Trace)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("HP0"));
-	DefaultHP -= Hitdamaged;
-	if (DefaultHP < 0)
-	{
-		
-		this->K2_DestroyActor();
-	}
+	Super::HitedActor(Hitdamaged,Trace);
 
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("HP0"));
+	if (Trace == true)
+	{
+		DefaultHP -= Hitdamaged;
+		if (DefaultHP < 0)
+		{
+
+			this->K2_DestroyActor();
+		}
+
+	}
+	
 	return DefaultHP;
 
 }
