@@ -34,24 +34,29 @@ protected:
 	virtual void BeginPlay() override;
 
 	float HP = 10;
-	UPROPERTY(EditAnywhere,Category="HP")
+	UPROPERTY(EditAnywhere,Category="State")
 	float DefaultHP = 10;
+
+	UPROPERTY(EditAnywhere, Category = "State")
+	float HitDamage = 10;
+
+	UPROPERTY(editAnywhere,BlueprintReadWrite,Category="Animation")
+	bool Doonce;
 
 	UPROPERTY(VisibleAnywhere,Category="StaticMesh")
 	class UStaticMeshComponent* WeaponStaticMesh;
 
 	UPROPERTY(EditAnywhere, Category="Animation")
-	class UAnimMontage* AtaackAnimMontage;
+	class UAnimMontage* AttackAnimMontage;
 
 	UFUNCTION(BlueprintCallable)
-	void MyTraceSingleByChannel();
+	float MyTraceSingleByChannel();
 
+	virtual float HitedActor(float Hitdamaged,bool Trace);
+	bool ReturnLintrece;
 
-	
-	
 	bool bIsAttacking;
 	void SecondAttack();
-	
 	void AttackAction();
 
 	

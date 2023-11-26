@@ -10,6 +10,7 @@
 #include "MyPlayableCharacter.generated.h"
 
 class AMyPlayerController;
+class AMybaseCharacter;
 
 /**
  * 
@@ -35,7 +36,8 @@ protected:
 	class USpringArmComponent* MinimapSpringArm;
 	UPROPERTY(EditAnywhere, Category = "MiniMap", meta = (AlowwPrivateAccess = "tue"))
 	class USceneCaptureComponent2D* Minimap;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="State")
+	float HP_Char=10;
 	
 	
 

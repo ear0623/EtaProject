@@ -22,8 +22,6 @@ AMyPlayableCharacter::AMyPlayableCharacter()
 	MinimapSpringArm->SetupAttachment(GetRootComponent());
 	Minimap = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("ScenComponent2D"));
 	Minimap->SetupAttachment(MinimapSpringArm);
-	
-
 
 }
 

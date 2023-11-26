@@ -13,7 +13,10 @@ AMyBaseCharacter::AMyBaseCharacter()
 	AActor::PrimaryActorTick.bCanEverTick = true;
 
 	HP = DefaultHP;
+	HitDamage = 10.0f;
 	bIsAttacking = false;
+	Doonce = false;
+	ReturnLintrece = false;
 	WeaponStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SwordMesh"));
 	WeaponStaticMesh->SetupAttachment(GetMesh(), FName("RightHand_Weapons"));
 	
@@ -28,7 +31,7 @@ void AMyBaseCharacter::BeginPlay()
 	
 }
 
-void AMyBaseCharacter::MyTraceSingleByChannel()
+float AMyBaseCharacter::MyTraceSingleByChannel()
 {
 	FHitResult MyHitResult;
 	FVector StartLocation = WeaponStaticMesh->GetSocketLocation(FName("LineTraceStartPoint"));
@@ -37,14 +40,39 @@ void AMyBaseCharacter::MyTraceSingleByChannel()
 	TraceParams.AddIgnoredActor(this);
 	TraceParams.AddIgnoredComponent(WeaponStaticMesh);
 
-	bool Hit= GetWorld()->LineTraceSingleByChannel(MyHitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("LinetraceOn"));
-	for (int i = 0; i < 10; i++)
+	ReturnLintrece = GetWorld()->LineTraceSingleByChannel(MyHitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("LinetraceOn"));
+	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 1.0f, 0, 5.333);
+	
+	if (ReturnLintrece)
 	{
-		DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 1.0f, 0, 5.333);
+		if (Doonce == false)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("True"));
+			Doonce = true;
+			return HitedActor(HitDamage, ReturnLintrece);
+		}
+		else
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("DoOnceTrue"));
+			return 0.0f;
+		}
+	}
+	else
+	{
+		return 0.0f;
+		
 	}
 	
+
+	return 0.0f;
 }
+
+float AMyBaseCharacter::HitedActor(float Hitdamaged, bool Trace)
+{
+	return DefaultHP;
+}
+
 
 void AMyBaseCharacter::SecondAttack()
 {
@@ -60,16 +88,12 @@ void AMyBaseCharacter::AttackAction()
 			UAnimInstance* AnimInstance;
 			AnimInstance = GetMesh()->GetAnimInstance();
 			
-			if (AnimInstance != nullptr&&AtaackAnimMontage !=nullptr)
+			if (AnimInstance != nullptr&&AttackAnimMontage !=nullptr)
 			{
-				AnimInstance->Montage_Play(AtaackAnimMontage,1.0f, EMontagePlayReturnType::Duration,0.0f,true);
-					MyTraceSingleByChannel();
+				AnimInstance->Montage_Play(AttackAnimMontage,1.0f, EMontagePlayReturnType::Duration,0.0f,true);
+			
 				
-				
-				//AnimInstance->Montage_JumpToSection(,AtaackAnimMontage);
-				
-				
-				//AnimInstance->Montage_Stop(2.26f, AtaackAnimMontage);
+
 				//printstring
 				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("montage_Play"));
 			}
@@ -85,6 +109,7 @@ void AMyBaseCharacter::AttackAction()
 
 		}
 		bIsAttacking = false;
+
 }
 
 
