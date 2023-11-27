@@ -8,9 +8,9 @@ AMyEnermyCharacter::AMyEnermyCharacter()
 	DefaultHP = 10;
 }
 
-float AMyEnermyCharacter::HitedActor(float Hitdamaged, bool Trace)
+float AMyEnermyCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)
 {
-	Super::HitedActor(Hitdamaged,Trace);
+	Super::HitedActor(Hitdamaged,Trace, DamagedActor);
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("HP0"));
 	if (Trace == true)

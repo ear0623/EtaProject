@@ -60,6 +60,10 @@ public:
 
 	virtual void AttackAction()override;
 
+	UFUNCTION(BlueprintCallable)
+	virtual float HitLinetrace() override;
+	virtual float HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)override;
+
 
 
 };

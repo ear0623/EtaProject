@@ -33,7 +33,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	float HP = 10;
 	UPROPERTY(EditAnywhere,Category="State")
 	float DefaultHP = 10;
 
@@ -49,19 +48,14 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Animation")
 	class UAnimMontage* AttackAnimMontage;
 
-	UFUNCTION(BlueprintCallable)
-	float MyTraceSingleByChannel();
 
-	virtual float HitedActor(float Hitdamaged,bool Trace);
+	virtual float HitLinetrace();
+	virtual void AttackAction();
+	virtual float HitedActor(float Hitdamaged,bool Trace,AActor* DamagedActor);
 	bool ReturnLintrece;
 
 	bool bIsAttacking;
-	void SecondAttack();
-	virtual void AttackAction();
-
 	
-
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

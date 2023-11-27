@@ -17,6 +17,6 @@ class ETAPROJECT_API AMyEnermyCharacter : public AMyBaseCharacter
 public:
 
 	AMyEnermyCharacter();
-	virtual float HitedActor(float Hitdamaged, bool Trace)override;
+	virtual float HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)override;
 	
 };

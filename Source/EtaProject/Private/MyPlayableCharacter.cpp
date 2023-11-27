@@ -2,6 +2,8 @@
 
 
 #include "MyPlayableCharacter.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/DamageType.h"
 
 
 AMyPlayableCharacter::AMyPlayableCharacter()
@@ -93,7 +95,7 @@ void AMyPlayableCharacter::CheckJump()
 
 void AMyPlayableCharacter::AttackMotion()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AttackMotion"));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AttackMotion"));
 	AttackAction();
 }
 
@@ -101,7 +103,7 @@ void AMyPlayableCharacter::AttackAction()
 {
 	Super::AttackAction();
 
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AttackAction"));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AttackAction"));
 	if (bIsAttack == false)
 	{
 		bIsAttack = true;
@@ -111,7 +113,7 @@ void AMyPlayableCharacter::AttackAction()
 		if (AnimInstance != nullptr && AttackAnimMontage != nullptr)
 		{
 			AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 0.0f, true);
-
+			
 			//printstring
 			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("montage_Play"));
 		}
@@ -128,6 +130,65 @@ void AMyPlayableCharacter::AttackAction()
 	}
 	bIsAttack = false;
 
+}
+
+float AMyPlayableCharacter::HitLinetrace()
+{
+	Super::HitLinetrace();
+
+	FHitResult MyHitResult;
+	FVector StartLocation = WeaponStaticMesh->GetSocketLocation(FName("LineTraceStartPoint"));
+	FVector EndLocation = WeaponStaticMesh->GetSocketLocation(FName("LineTraceEndPoint"));
+	FCollisionQueryParams TraceParams;
+	TraceParams.AddIgnoredActor(this);
+	TraceParams.AddIgnoredComponent(WeaponStaticMesh);
+
+	ReturnLintrece = GetWorld()->LineTraceSingleByChannel(MyHitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("LinetraceOn"));
+	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 1.0f, 0, 5.333);
+
+	if (ReturnLintrece)
+	{
+
+		if (Doonce == false)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("True"));
+			Doonce = true;
+
+			HitedActor(HitDamage, ReturnLintrece, MyHitResult.GetActor());
+			//HitedActor(HitDamage, ReturnLintrece);
+			//MyHitResult.GetActor()->K2_DestroyActor();
+			
+
+		}
+		else
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("DoOnceTrue"));
+			return 0.0f;
+		}
+	}
+	else
+	{
+		return 0.0f;
+
+	}
+
+
+	return 0.0f;
+	return 0.0f;
+}
+
+float AMyPlayableCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)
+{
+
+	Super::HitedActor(Hitdamaged, Trace, DamagedActor);
+	if (DamagedActor&&Trace)
+	{
+		class FDamageEvent* DamageEvent = new FDamageEvent();
+		DamagedActor->TakeDamage(Hitdamaged,FDamageEvent::, GetController(), DamagedActor);
+	}
+	//float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor * DamageCauser);
+	return 0.0f;
 }
 
 

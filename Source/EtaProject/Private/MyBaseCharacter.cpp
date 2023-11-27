@@ -12,7 +12,6 @@ AMyBaseCharacter::AMyBaseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	AActor::PrimaryActorTick.bCanEverTick = true;
 
-	HP = DefaultHP;
 	HitDamage = 10.0f;
 	bIsAttacking = false;
 	Doonce = false;
@@ -31,62 +30,23 @@ void AMyBaseCharacter::BeginPlay()
 	
 }
 
-float AMyBaseCharacter::MyTraceSingleByChannel()
+
+float AMyBaseCharacter::HitLinetrace()
 {
-	FHitResult MyHitResult;
-	FVector StartLocation = WeaponStaticMesh->GetSocketLocation(FName("LineTraceStartPoint"));
-	FVector EndLocation = WeaponStaticMesh->GetSocketLocation(FName("LineTraceEndPoint"));
-	FCollisionQueryParams TraceParams;
-	TraceParams.AddIgnoredActor(this);
-	TraceParams.AddIgnoredComponent(WeaponStaticMesh);
-
-	ReturnLintrece = GetWorld()->LineTraceSingleByChannel(MyHitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
-	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("LinetraceOn"));
-	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 1.0f, 0, 5.333);
-	
-	if (ReturnLintrece)
-	{
-		
-		if (Doonce == false)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("True"));
-			Doonce = true;
-			//HitedActor(HitDamage, ReturnLintrece);
-			MyHitResult.GetActor()->K2_DestroyActor();
-			
-		}
-		else
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("DoOnceTrue"));
-			return 0.0f;
-		}
-	}
-	else
-	{
-		return 0.0f;
-		
-	}
-	
-
 	return 0.0f;
 }
 
-float AMyBaseCharacter::HitedActor(float Hitdamaged, bool Trace)
+void AMyBaseCharacter::AttackAction()
+{
+
+}
+
+float AMyBaseCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Parant"));
 	return DefaultHP;
 }
 
-
-void AMyBaseCharacter::SecondAttack()
-{
-	
-}
-
-void AMyBaseCharacter::AttackAction()
-{
-	
-}
 
 
 
