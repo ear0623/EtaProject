@@ -27,3 +27,15 @@ float AMyEnermyCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* Damag
 	return DefaultHP;
 
 }
+
+void AMyEnermyCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (DefaultHP < 0)
+	{
+		this->K2_DestroyActor();
+	}
+}
+
+

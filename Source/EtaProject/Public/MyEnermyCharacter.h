@@ -18,5 +18,6 @@ public:
 
 	AMyEnermyCharacter();
 	virtual float HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)override;
+	virtual void Tick(float DeltaTime) override;
 	
 };

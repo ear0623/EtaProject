@@ -4,6 +4,7 @@
 #include "MyPlayableCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/DamageType.h"
+#include "Engine/DamageEvents.h"
 
 
 AMyPlayableCharacter::AMyPlayableCharacter()
@@ -26,6 +27,7 @@ AMyPlayableCharacter::AMyPlayableCharacter()
 	Minimap = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("ScenComponent2D"));
 	Minimap->SetupAttachment(MinimapSpringArm);
 
+	CurrentAttackCombo = AttackCombo::None;
 }
 
 void AMyPlayableCharacter::Tick(float DeltaTime)
@@ -41,22 +43,27 @@ void AMyPlayableCharacter::Tick(float DeltaTime)
 void AMyPlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	if (!bIsAttack)
-	{
-		PlayerInputComponent->BindAxis("MoveFoward", this, &AMyPlayableCharacter::MoveFoward);
-		PlayerInputComponent->BindAxis("MoveRight", this, &AMyPlayableCharacter::MoveRight);
-		PlayerInputComponent->BindAxis("MouseMoveX", this, &AMyPlayableCharacter::MouseMoveX);
-		PlayerInputComponent->BindAxis("MouseMoveY", this, &AMyPlayableCharacter::MouseMoveY);
-		PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyPlayableCharacter::CheckJump);
-		PlayerInputComponent->BindAction("Jump", IE_Released, this, &AMyPlayableCharacter::CheckJump);
-		PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AMyPlayableCharacter::AttackMotion);
-	}
+	
+	PlayerInputComponent->BindAxis("MoveFoward", this, &AMyPlayableCharacter::MoveFoward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &AMyPlayableCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("MouseMoveX", this, &AMyPlayableCharacter::MouseMoveX);
+	PlayerInputComponent->BindAxis("MouseMoveY", this, &AMyPlayableCharacter::MouseMoveY);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyPlayableCharacter::CheckJump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &AMyPlayableCharacter::CheckJump);
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AMyPlayableCharacter::AttackMotion);
+	
 	
 }
 
 void AMyPlayableCharacter::MoveFoward(float InputValue)
 {
-	if (InputValue != 0.0f)
+	if (bIsAttack)
+	{
+		FVector MoveFoward = GetActorForwardVector();
+		AddMovementInput(MoveFoward, 0);
+		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AttackMotion"));
+	}
+	else
 	{
 		FVector MoveFoward = GetActorForwardVector();
 		AddMovementInput(MoveFoward, InputValue);
@@ -95,8 +102,8 @@ void AMyPlayableCharacter::CheckJump()
 
 void AMyPlayableCharacter::AttackMotion()
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AttackMotion"));
 	AttackAction();
+	
 }
 
 void AMyPlayableCharacter::AttackAction()
@@ -106,13 +113,34 @@ void AMyPlayableCharacter::AttackAction()
 	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AttackAction"));
 	if (bIsAttack == false)
 	{
-		bIsAttack = true;
-		UAnimInstance* AnimInstance;
 		AnimInstance = GetMesh()->GetAnimInstance();
-
-		if (AnimInstance != nullptr && AttackAnimMontage != nullptr)
+		
+		if (AnimInstance != nullptr && AttackAnimMontage != nullptr&&Doonce==false&&bIsAttack==false)
 		{
-			AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 0.0f, true);
+			bIsAttack = true;
+			Doonce = true;
+
+			switch (CurrentAttackCombo)
+			{
+			case AttackCombo::None:
+				AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 0.0f, true);
+				CurrentAttackCombo = AttackCombo::Attack01;
+				break;
+
+			case AttackCombo::Attack01:
+				AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 1.6f, true);
+				CurrentAttackCombo = AttackCombo::Attack02;
+				break;
+
+			case AttackCombo::Attack02:
+				AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 2.9f, true);
+				CurrentAttackCombo = AttackCombo::None;
+				break;
+
+			default:
+				break;
+			}
+		
 			
 			//printstring
 			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("montage_Play"));
@@ -121,14 +149,13 @@ void AMyPlayableCharacter::AttackAction()
 		{
 
 		}
-
-
+		
 	}
 	else
 	{
 
 	}
-	bIsAttack = false;
+	
 
 }
 
@@ -144,7 +171,6 @@ float AMyPlayableCharacter::HitLinetrace()
 	TraceParams.AddIgnoredComponent(WeaponStaticMesh);
 
 	ReturnLintrece = GetWorld()->LineTraceSingleByChannel(MyHitResult, StartLocation, EndLocation, ECC_Visibility, TraceParams);
-	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("LinetraceOn"));
 	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 1.0f, 0, 5.333);
 
 	if (ReturnLintrece)
@@ -156,10 +182,7 @@ float AMyPlayableCharacter::HitLinetrace()
 			Doonce = true;
 
 			HitedActor(HitDamage, ReturnLintrece, MyHitResult.GetActor());
-			//HitedActor(HitDamage, ReturnLintrece);
-			//MyHitResult.GetActor()->K2_DestroyActor();
 			
-
 		}
 		else
 		{
@@ -169,12 +192,8 @@ float AMyPlayableCharacter::HitLinetrace()
 	}
 	else
 	{
-		return 0.0f;
 
 	}
-
-
-	return 0.0f;
 	return 0.0f;
 }
 
@@ -184,11 +203,23 @@ float AMyPlayableCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* Dam
 	Super::HitedActor(Hitdamaged, Trace, DamagedActor);
 	if (DamagedActor&&Trace)
 	{
-		class FDamageEvent* DamageEvent = new FDamageEvent();
-		DamagedActor->TakeDamage(Hitdamaged,FDamageEvent::, GetController(), DamagedActor);
+		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("NotHere"));
+		FDamageEvent DamageEvent;
+		DamagedActor->TakeDamage(Hitdamaged,DamageEvent, GetController(), DamagedActor);
 	}
 	//float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor * DamageCauser);
 	return 0.0f;
+}
+
+void AMyPlayableCharacter::Delay()
+{
+	Doonce = false;
+	bIsAttack = false;
+}
+
+void AMyPlayableCharacter::MyAddMovemoentInput()
+{
+
 }
 
 

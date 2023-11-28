@@ -65,7 +65,7 @@ void AMyBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 
 
-	PlayerInputComponent->BindAction("Attack", IE_Pressed,this,&AMyBaseCharacter::AttackAction);
+	//PlayerInputComponent->BindAction("Attack", IE_Pressed,this,&AMyBaseCharacter::AttackAction);
 
 
 }

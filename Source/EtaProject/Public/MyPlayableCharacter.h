@@ -11,6 +11,7 @@
 
 class AMyPlayerController;
 class AMybaseCharacter;
+class UAnimInstance;
 
 /**
  * 
@@ -47,7 +48,7 @@ public:
 	void Tick(float DeltaTime) override;
 
 	void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	//
 	void MoveFoward(float InputValue);
 	void MoveRight(float InputValue);
 	void MouseMoveX(float InputValue);
@@ -56,14 +57,21 @@ public:
 	void AttackMotion();
 	UPROPERTY(BlueprintReadOnly,Category="Move")
 	bool bIsJumping;
+	//
+	//
 	bool bIsAttack;
-
 	virtual void AttackAction()override;
 
 	UFUNCTION(BlueprintCallable)
 	virtual float HitLinetrace() override;
 	virtual float HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)override;
-
+	//
+	//
+	UAnimInstance* AnimInstance;
+	UPROPERTY(BlueprintReadWrite, Category = "AttackCombo")
+	AttackCombo CurrentAttackCombo;
+	void Delay();
+	
 
 
 };
