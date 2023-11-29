@@ -10,13 +10,14 @@
 #include "MyPlayableCharacter.generated.h"
 
 
+
 class AMyPlayerController;
 class AMybaseCharacter;
 class UAnimInstance;
 class UKismetSystemLibrary;
 class UPlayMontageCallbackProxy;
 
-
+// DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnMontageEndedMCDelegate, UanimMontage*, Montage, bool, bInterrupted);
 /**
  * 
  */
@@ -76,7 +77,7 @@ public:
 	AttackCombo CurrentAttackCombo;
 	UPlayMontageCallbackProxy* PlayMontageCallBackProxy;
 	UFUNCTION()
-	void Reset();
+	void Reset(UAnimInstance* Montage,bool bInterrupted);
 	
 
 

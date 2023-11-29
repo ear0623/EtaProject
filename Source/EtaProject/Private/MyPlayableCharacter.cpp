@@ -119,7 +119,7 @@ void AMyPlayableCharacter::AttackAction()
 				AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 0.0f, true);
 				if (PlayMontageCallBackProxy)
 				{
-					//AnimInstance->OnMontageEnded.BindDynamic(this,&AMyPlayableCharacter::Reset);
+					//AnimInstance->OnMontageEnded.AddDynamic(this,&AMyPlayableCharacter::Reset);
 					//PlayMontageCallBackProxy->OnBlendOut.AddDynamic(this,&AMyPlayableCharacter::Reset);
 				}
 				CurrentAttackCombo = AttackCombo::Attack01;
@@ -207,7 +207,7 @@ float AMyPlayableCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* Dam
 	return 0.0f;
 }
 
-void AMyPlayableCharacter::Reset()
+void AMyPlayableCharacter::Reset(UAnimInstance* Montage, bool bInterrupted)
 {
 	Doonce = false;
 	bIsAttack = false;
