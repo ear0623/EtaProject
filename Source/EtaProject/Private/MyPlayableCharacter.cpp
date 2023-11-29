@@ -117,7 +117,11 @@ void AMyPlayableCharacter::AttackAction()
 			{
 			case AttackCombo::None:
 				AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 0.0f, true);
-				PlayMontageCallBackProxy->OnBlendOut;
+				if (PlayMontageCallBackProxy)
+				{
+					//AnimInstance->OnMontageEnded.BindDynamic(this,&AMyPlayableCharacter::Reset);
+					//PlayMontageCallBackProxy->OnBlendOut.AddDynamic(this,&AMyPlayableCharacter::Reset);
+				}
 				CurrentAttackCombo = AttackCombo::Attack01;
 				this->GetCharacterMovement()->MaxWalkSpeed = 0.0f;
 				break;
@@ -203,12 +207,14 @@ float AMyPlayableCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* Dam
 	return 0.0f;
 }
 
-void AMyPlayableCharacter::Delay()
+void AMyPlayableCharacter::Reset()
 {
 	Doonce = false;
 	bIsAttack = false;
 	this->GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 }
+
+
 
 
 

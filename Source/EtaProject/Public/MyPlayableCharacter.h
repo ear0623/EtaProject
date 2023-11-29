@@ -75,7 +75,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "AttackCombo")
 	AttackCombo CurrentAttackCombo;
 	UPlayMontageCallbackProxy* PlayMontageCallBackProxy;
-	void Delay();
+	UFUNCTION()
+	void Reset();
 	
 
 
