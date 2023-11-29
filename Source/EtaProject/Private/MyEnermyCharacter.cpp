@@ -32,7 +32,7 @@ void AMyEnermyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (DefaultHP < 0)
+	if (DefaultHP < 10)
 	{
 		this->K2_DestroyActor();
 	}

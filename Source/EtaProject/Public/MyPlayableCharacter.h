@@ -9,9 +9,13 @@
 #include "Components/SceneCaptureComponent2D.h"
 #include "MyPlayableCharacter.generated.h"
 
+
 class AMyPlayerController;
 class AMybaseCharacter;
 class UAnimInstance;
+class UKismetSystemLibrary;
+class UPlayMontageCallbackProxy;
+
 
 /**
  * 
@@ -70,6 +74,7 @@ public:
 	UAnimInstance* AnimInstance;
 	UPROPERTY(BlueprintReadWrite, Category = "AttackCombo")
 	AttackCombo CurrentAttackCombo;
+	UPlayMontageCallbackProxy* PlayMontageCallBackProxy;
 	void Delay();
 	
 

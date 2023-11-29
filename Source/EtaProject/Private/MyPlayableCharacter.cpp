@@ -5,6 +5,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/DamageType.h"
 #include "Engine/DamageEvents.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "PlayMontageCallbackProxy.h"
+
 
 
 AMyPlayableCharacter::AMyPlayableCharacter()
@@ -26,6 +29,7 @@ AMyPlayableCharacter::AMyPlayableCharacter()
 	MinimapSpringArm->SetupAttachment(GetRootComponent());
 	Minimap = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("ScenComponent2D"));
 	Minimap->SetupAttachment(MinimapSpringArm);
+
 
 	CurrentAttackCombo = AttackCombo::None;
 }
@@ -51,26 +55,15 @@ void AMyPlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyPlayableCharacter::CheckJump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &AMyPlayableCharacter::CheckJump);
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AMyPlayableCharacter::AttackMotion);
-	
-	
 }
 
 void AMyPlayableCharacter::MoveFoward(float InputValue)
 {
-	if (bIsAttack)
-	{
-		FVector MoveFoward = GetActorForwardVector();
-		AddMovementInput(MoveFoward, 0);
-		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AttackMotion"));
-	}
-	else
-	{
-		FVector MoveFoward = GetActorForwardVector();
-		AddMovementInput(MoveFoward, InputValue);
-	}
-	
-}
+	//this->GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 
+	FVector MoveFoward = GetActorForwardVector();
+	AddMovementInput(MoveFoward, InputValue);
+}
 void AMyPlayableCharacter::MoveRight(float InputValue)
 {
 	FVector Moveright = GetActorRightVector();
@@ -102,14 +95,16 @@ void AMyPlayableCharacter::CheckJump()
 
 void AMyPlayableCharacter::AttackMotion()
 {
+
 	AttackAction();
+	//Delay();
 	
 }
 
 void AMyPlayableCharacter::AttackAction()
 {
 	Super::AttackAction();
-
+	
 	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AttackAction"));
 	if (bIsAttack == false)
 	{
@@ -118,30 +113,30 @@ void AMyPlayableCharacter::AttackAction()
 		if (AnimInstance != nullptr && AttackAnimMontage != nullptr&&Doonce==false&&bIsAttack==false)
 		{
 			bIsAttack = true;
-			Doonce = true;
-
 			switch (CurrentAttackCombo)
 			{
 			case AttackCombo::None:
 				AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 0.0f, true);
+				PlayMontageCallBackProxy->OnBlendOut;
 				CurrentAttackCombo = AttackCombo::Attack01;
+				this->GetCharacterMovement()->MaxWalkSpeed = 0.0f;
 				break;
 
 			case AttackCombo::Attack01:
 				AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 1.6f, true);
 				CurrentAttackCombo = AttackCombo::Attack02;
+				this->GetCharacterMovement()->MaxWalkSpeed = 0.0f;
 				break;
 
 			case AttackCombo::Attack02:
 				AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 2.9f, true);
 				CurrentAttackCombo = AttackCombo::None;
+				this->GetCharacterMovement()->MaxWalkSpeed = 0.0f;
 				break;
 
 			default:
 				break;
 			}
-		
-			
 			//printstring
 			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("montage_Play"));
 		}
@@ -155,8 +150,6 @@ void AMyPlayableCharacter::AttackAction()
 	{
 
 	}
-	
-
 }
 
 float AMyPlayableCharacter::HitLinetrace()
@@ -178,7 +171,7 @@ float AMyPlayableCharacter::HitLinetrace()
 
 		if (Doonce == false)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("True"));
+			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("True"));
 			Doonce = true;
 
 			HitedActor(HitDamage, ReturnLintrece, MyHitResult.GetActor());
@@ -187,7 +180,6 @@ float AMyPlayableCharacter::HitLinetrace()
 		else
 		{
 			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("DoOnceTrue"));
-			return 0.0f;
 		}
 	}
 	else
@@ -215,12 +207,9 @@ void AMyPlayableCharacter::Delay()
 {
 	Doonce = false;
 	bIsAttack = false;
+	this->GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 }
 
-void AMyPlayableCharacter::MyAddMovemoentInput()
-{
-
-}
 
 
 
