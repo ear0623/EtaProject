@@ -77,7 +77,7 @@ public:
 	AttackCombo CurrentAttackCombo;
 	UPlayMontageCallbackProxy* PlayMontageCallBackProxy;
 	UFUNCTION()
-	void Reset(UAnimInstance* Montage,bool bInterrupted);
+	void MyReset(UAnimInstance* AnimMontage,bool bInterrupted);
 	
 
 

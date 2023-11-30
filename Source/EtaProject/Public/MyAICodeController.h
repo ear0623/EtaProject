@@ -6,7 +6,10 @@
 #include "AIController.h"
 #include "MyAICodeController.generated.h"
 
+
 class UBehaviorTree;
+class UAIPerceptionComponent;
+class UBlackboardComponent;
 /**
  * 
  */
@@ -17,13 +20,25 @@ class ETAPROJECT_API AMyAICodeController : public AAIController
 
 public:
 	AMyAICodeController();
-	virtual void OnPossess(APawn* Pawn)override;
-	//void OnTargetPerceptionUpdated_Delegate(AActor* Actor,);
+	virtual void OnPossess(APawn* MyPawn)override;
+	UFUNCTION()
+	void OnTargetPerceptionUpdated_Delegate(AActor* Actor,FAIStimulus stimulus);
+	virtual void BeginPlay() override;
+
+	//
+	class UAISenseConfig_Sight* Sight;
+	//
+	void StartEnermyTimer(bool Invalue, UObject* objectvalue);
+	
 
 protected:
 	UBehaviorTree* BTAsset;
-	UPROPERTY(VisibleAnywhere, Category=AI)
-	TObjectPtr<UAIPerceptionComponent> AIPerceptionComponent = nullptr;
+	UPROPERTY(VisibleAnywhere, Category="AI")
+	//TObjectPtr<UAIPerceptionComponent> AIPerceptionComponent = nullptr;
+	//TObjectPtr<UBlackboardComponent> BlackboardComponent = nullptr;
+	UBlackboardComponent* MyblackBoard = GetBlackboardComponent();
+	UPROPERTY(VisibleAnywhere, Category = "AI")
+	UAIPerceptionComponent* AIPerceptioncompoenet;
 	
 
 private:

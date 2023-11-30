@@ -207,7 +207,7 @@ float AMyPlayableCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* Dam
 	return 0.0f;
 }
 
-void AMyPlayableCharacter::Reset(UAnimInstance* Montage, bool bInterrupted)
+void AMyPlayableCharacter::MyReset(UAnimInstance* AnimMontage, bool bInterrupted)
 {
 	Doonce = false;
 	bIsAttack = false;
