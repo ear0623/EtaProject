@@ -2,10 +2,13 @@
 
 
 #include "MyEnermyCharacter.h"
+#include "MyAICodeController.h"
 
 AMyEnermyCharacter::AMyEnermyCharacter()
 {
 	DefaultHP = 10;
+	AIControllerClass = AMyAICodeController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 float AMyEnermyCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)
