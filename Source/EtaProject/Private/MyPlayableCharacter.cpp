@@ -183,19 +183,6 @@ float AMyPlayableCharacter::HitLinetrace()
 	return 0.0f;
 }
 
-float AMyPlayableCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)
-{
-	Super::HitedActor(Hitdamaged, Trace, DamagedActor);
-
-	if (DamagedActor&&Trace)
-	{
-		FDamageEvent DamageEvent;
-		DamagedActor->TakeDamage(Hitdamaged,DamageEvent, GetController(), DamagedActor);
-	}
-	//float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor * DamageCauser);
-	return 0.0f;
-}
-
 float AMyPlayableCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);

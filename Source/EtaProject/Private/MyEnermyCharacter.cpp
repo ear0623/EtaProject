@@ -11,25 +11,6 @@ AMyEnermyCharacter::AMyEnermyCharacter()
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
-float AMyEnermyCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)
-{
-	Super::HitedActor(Hitdamaged,Trace, DamagedActor);
-
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("HP0"));
-	if (Trace == true)
-	{
-		DefaultHP -= Hitdamaged;
-		if (DefaultHP < 0)
-		{
-
-			this->K2_DestroyActor();
-		}
-
-	}
-	
-	return DefaultHP;
-
-}
 
 void AMyEnermyCharacter::Tick(float DeltaTime)
 {
@@ -49,8 +30,12 @@ void AMyEnermyCharacter::ReceiveAnyDamage(float Damage, const UDamageType* Damag
 	Super::ReceiveAnyDamage(Damage, DamageType, Instigatedby, DamagedCauser);
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("ReceiveAnyDamage_Enermy"));
-	DefaultHP -= Damage;
-	if (DefaultHP < 0)
+	
+	if (DefaultHP > 0)
+	{
+		DefaultHP -= Damage;
+	}
+	else
 	{
 		this->K2_DestroyActor();
 	}

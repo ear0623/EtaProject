@@ -41,21 +41,12 @@ void AMyBaseCharacter::AttackAction()
 
 }
 
-float AMyBaseCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)
-{
-	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("Parant"));
-	return DefaultHP;
-}
-
-
-
 
 // Called every frame
 void AMyBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	
 }
 
 // Called to bind functionality to input
@@ -63,11 +54,7 @@ void AMyBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-
-
 	//PlayerInputComponent->BindAction("Attack", IE_Pressed,this,&AMyBaseCharacter::AttackAction);
-
-
 }
 
 float AMyBaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)

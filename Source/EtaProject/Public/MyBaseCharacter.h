@@ -51,7 +51,6 @@ protected:
 
 	virtual float HitLinetrace();
 	virtual void AttackAction();
-	virtual float HitedActor(float Hitdamaged,bool Trace,AActor* DamagedActor);
 	bool ReturnLintrece;
 
 	bool bIsAttacking;
@@ -63,6 +62,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	//
+	//Damage
 	virtual float TakeDamage(float DamageAmount,struct FDamageEvent const& DamageEvent,class AController* EventInstigator,AActor* DamageCauser);
 	virtual void ReceiveAnyDamage(float Damage, const class UDamageType* DamageType, class AController* Instigatedby, AActor* DamagedCauser);
 

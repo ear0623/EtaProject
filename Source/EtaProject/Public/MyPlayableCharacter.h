@@ -21,7 +21,7 @@ class AMyEnermyCharacter;
 class UDamageType;
 
 
-// DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnMontageEndedMCDelegate, UanimMontage*, Montage, bool, bInterrupted);
+
 /**
  * 
  */
@@ -44,7 +44,7 @@ protected:
 	AMyPlayerController* MyPlayerCharacter;
 	UPROPERTY(EditAnywhere,Category="MiniMap",meta=(AllowPrivateAccess="true"))
 	class USpringArmComponent* MinimapSpringArm;
-	UPROPERTY(EditAnywhere, Category = "MiniMap", meta = (AlowwPrivateAccess = "tue"))
+	UPROPERTY(EditAnywhere, Category = "MiniMap", meta = (AllowPrivateAccess = "true"))
 	class USceneCaptureComponent2D* Minimap;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="State")
 	float HP_Char=10;
@@ -77,7 +77,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual float HitLinetrace() override;
-	virtual float HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)override;
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)override;
 	virtual void ReceiveAnyDamage(float Damage, const class UDamageType* DamageType, class AController* Instigatedby, AActor* DamagedCauser)override;
 	//
