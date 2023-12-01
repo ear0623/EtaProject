@@ -72,12 +72,15 @@ void AMyBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 float AMyBaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	DefaultHP -= DamageAmount;
-	if (DefaultHP <= 0)
-	{
-		//setsimulatePhysics
-	}
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
 	return DamageAmount;
+}
+
+void AMyBaseCharacter::ReceiveAnyDamage(float Damage, const class UDamageType* DamageType, AController* Instigatedby, AActor* DamagedCauser)
+{
+	Super::ReceiveAnyDamage(Damage,DamageType,Instigatedby, DamagedCauser);
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("ReceiveAnyDamage_Base"));
 }
 
 

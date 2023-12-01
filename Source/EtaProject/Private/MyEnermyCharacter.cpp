@@ -35,10 +35,26 @@ void AMyEnermyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//if (DefaultHP < 10)
-	//{
-	//	this->K2_DestroyActor();
-	//}
+	
+}
+
+float AMyEnermyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	return 0.0f;
+}
+
+void AMyEnermyCharacter::ReceiveAnyDamage(float Damage, const UDamageType* DamageType, AController* Instigatedby, AActor* DamagedCauser)
+{
+	Super::ReceiveAnyDamage(Damage, DamageType, Instigatedby, DamagedCauser);
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("ReceiveAnyDamage_Enermy"));
+	DefaultHP -= Damage;
+	if (DefaultHP < 0)
+	{
+		this->K2_DestroyActor();
+	}
+
 }
 
 

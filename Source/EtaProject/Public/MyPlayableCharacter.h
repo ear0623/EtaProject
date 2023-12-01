@@ -18,6 +18,7 @@ class UKismetSystemLibrary;
 class UPlayMontageCallbackProxy;
 class FOnMontageEndedMCDelegate;
 class AMyEnermyCharacter;
+class UDamageType;
 
 
 // DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnMontageEndedMCDelegate, UanimMontage*, Montage, bool, bInterrupted);
@@ -69,10 +70,16 @@ public:
 	//
 	bool bIsAttack;
 	virtual void AttackAction()override;
+	//
+	//
+	UDamageType* MyDamageType = NewObject<UDamageType>();
+
 
 	UFUNCTION(BlueprintCallable)
 	virtual float HitLinetrace() override;
 	virtual float HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)override;
+	virtual void ReceiveAnyDamage(float Damage, const class UDamageType* DamageType, class AController* Instigatedby, AActor* DamagedCauser)override;
 	//
 	//
 	UAnimInstance* AnimInstance;

@@ -7,6 +7,7 @@
 #include "Engine/DamageEvents.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MyEnermyCharacter.h"
+#include "GameFramework/DamageType.h"
 
 
 
@@ -33,7 +34,6 @@ AMyPlayableCharacter::AMyPlayableCharacter()
 
 
 	CurrentAttackCombo = AttackCombo::None;
-	//MyEnermy = MakeShareable(MyEnermyCharacter);
 }
 
 void AMyPlayableCharacter::Tick(float DeltaTime)
@@ -43,7 +43,6 @@ void AMyPlayableCharacter::Tick(float DeltaTime)
 		Jump();
 		AddMovementInput(FVector(0, 0, 0), 0);
 	}
-	//AMyBaseCharacter::MyTraceSingleByChannel();
 }
 
 void AMyPlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -61,8 +60,6 @@ void AMyPlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 void AMyPlayableCharacter::MoveFoward(float InputValue)
 {
-	//this->GetCharacterMovement()->MaxWalkSpeed = 600.0f;
-
 	FVector MoveFoward = GetActorForwardVector();
 	AddMovementInput(MoveFoward, InputValue);
 }
@@ -75,7 +72,6 @@ void AMyPlayableCharacter::MoveRight(float InputValue)
 void AMyPlayableCharacter::MouseMoveX(float InputValue)
 {
 	AddControllerYawInput(InputValue);
-
 }
 
 void AMyPlayableCharacter::MouseMoveY(float InputValue)
@@ -137,7 +133,7 @@ void AMyPlayableCharacter::AttackAction()
 			}
 			AnimInstance->OnMontageEnded.AddDynamic(this, &AMyPlayableCharacter::OnMontageEnded);
 			//printstring
-			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("montage_Play"));
+			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT(""));
 		}
 		else
 		{
@@ -172,11 +168,12 @@ float AMyPlayableCharacter::HitLinetrace()
 		{
 			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("True"));
 			Doonce = true;
-			HitedActor(HitDamage, ReturnLintrece, MyHitResult.GetActor());
+			FDamageEvent DamageEvent;
+			TakeDamage(HitDamage, DamageEvent, GetController(), MyHitResult.GetActor());
 		}
 		else
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("DoOnceTrue"));
+		
 		}
 	}
 	else
@@ -189,14 +186,42 @@ float AMyPlayableCharacter::HitLinetrace()
 float AMyPlayableCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)
 {
 	Super::HitedActor(Hitdamaged, Trace, DamagedActor);
+
 	if (DamagedActor&&Trace)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("NotHere"));
 		FDamageEvent DamageEvent;
 		DamagedActor->TakeDamage(Hitdamaged,DamageEvent, GetController(), DamagedActor);
 	}
 	//float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor * DamageCauser);
 	return 0.0f;
+}
+
+float AMyPlayableCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	if (DamageCauser)
+	{
+		AMyEnermyCharacter* MyEnermy = Cast<AMyEnermyCharacter>(DamageCauser);
+		if (MyEnermy)
+		{
+			MyEnermy->ReceiveAnyDamage(DamageAmount, MyDamageType, EventInstigator, DamageCauser);
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("DamageCauser_True"));
+		}
+		
+	}
+	else
+	{
+		
+	}
+	//ReceiveAnyDamage(DamageAmount,MyDamageType, EventInstigator, DamageCauser);
+	return DamageAmount;
+}
+
+void AMyPlayableCharacter::ReceiveAnyDamage(float Damage, const UDamageType* DamageType, AController* Instigatedby, AActor* DamagedCauser)
+{
+	Super::ReceiveAnyDamage(Damage, DamageType, Instigatedby, DamagedCauser);
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("ReceiveDamage_Player"));
 }
 
 void AMyPlayableCharacter::OnMontageEnded(UAnimMontage* Montage, bool Value)
@@ -207,7 +232,6 @@ void AMyPlayableCharacter::OnMontageEnded(UAnimMontage* Montage, bool Value)
 	this->GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 	if (!Doonce)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("OnAddDynamic"));
 		AnimInstance->OnMontageEnded.RemoveDynamic(this, &AMyPlayableCharacter::OnMontageEnded);
 	}
 }
