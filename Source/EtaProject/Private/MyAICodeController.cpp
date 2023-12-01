@@ -19,7 +19,7 @@ AMyAICodeController::AMyAICodeController()
 void AMyAICodeController::OnPossess(APawn* MyPawn)
 {
 	Super::OnPossess(MyPawn);
-
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("OnPossess"));
 	this->RunBehaviorTree(BTAsset);
 	AIPerceptioncompoenet->OnTargetPerceptionUpdated.AddDynamic(this,&AMyAICodeController::OnTargetPerceptionUpdated_Delegate);
 }
@@ -34,6 +34,7 @@ void AMyAICodeController::OnTargetPerceptionUpdated_Delegate(AActor* Actor, FAIS
 	{
 		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 		StartEnermyTimer(true, Actor);
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AI"));
 	}
 	else
 	{
@@ -46,6 +47,7 @@ void AMyAICodeController::OnTargetPerceptionUpdated_Delegate(AActor* Actor, FAIS
 void AMyAICodeController::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	
 }
 

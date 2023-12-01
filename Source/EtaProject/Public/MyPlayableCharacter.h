@@ -16,6 +16,9 @@ class AMybaseCharacter;
 class UAnimInstance;
 class UKismetSystemLibrary;
 class UPlayMontageCallbackProxy;
+class FOnMontageEndedMCDelegate;
+class AMyEnermyCharacter;
+
 
 // DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnMontageEndedMCDelegate, UanimMontage*, Montage, bool, bInterrupted);
 /**
@@ -75,10 +78,12 @@ public:
 	UAnimInstance* AnimInstance;
 	UPROPERTY(BlueprintReadWrite, Category = "AttackCombo")
 	AttackCombo CurrentAttackCombo;
-	UPlayMontageCallbackProxy* PlayMontageCallBackProxy;
 	UFUNCTION()
-	void MyReset(UAnimInstance* AnimMontage,bool bInterrupted);
-	
-
+	void OnMontageEnded(UAnimMontage* Montage, bool Value);
+	//
+	//
+	//AMyEnermyCharacter* MyEnermyCha= NewObject<AMyEnermyCharacter>();
+	//TSharedPtr<AMyEnermyCharacter> MyEnermy;
+	//AMyEnermyCharacter* Enermy = Cast<AMyEnermyCharacter>(ACharacter);
 
 };

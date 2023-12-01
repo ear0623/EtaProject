@@ -6,7 +6,8 @@
 #include "GameFramework/DamageType.h"
 #include "Engine/DamageEvents.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "PlayMontageCallbackProxy.h"
+#include "MyEnermyCharacter.h"
+
 
 
 
@@ -32,6 +33,7 @@ AMyPlayableCharacter::AMyPlayableCharacter()
 
 
 	CurrentAttackCombo = AttackCombo::None;
+	//MyEnermy = MakeShareable(MyEnermyCharacter);
 }
 
 void AMyPlayableCharacter::Tick(float DeltaTime)
@@ -95,10 +97,7 @@ void AMyPlayableCharacter::CheckJump()
 
 void AMyPlayableCharacter::AttackMotion()
 {
-
 	AttackAction();
-	//Delay();
-	
 }
 
 void AMyPlayableCharacter::AttackAction()
@@ -117,11 +116,6 @@ void AMyPlayableCharacter::AttackAction()
 			{
 			case AttackCombo::None:
 				AnimInstance->Montage_Play(AttackAnimMontage, 1.0f, EMontagePlayReturnType::Duration, 0.0f, true);
-				if (PlayMontageCallBackProxy)
-				{
-					//AnimInstance->OnMontageEnded.AddDynamic(this,&AMyPlayableCharacter::Reset);
-					//PlayMontageCallBackProxy->OnBlendOut.AddDynamic(this,&AMyPlayableCharacter::Reset);
-				}
 				CurrentAttackCombo = AttackCombo::Attack01;
 				this->GetCharacterMovement()->MaxWalkSpeed = 0.0f;
 				break;
@@ -141,6 +135,7 @@ void AMyPlayableCharacter::AttackAction()
 			default:
 				break;
 			}
+			AnimInstance->OnMontageEnded.AddDynamic(this, &AMyPlayableCharacter::OnMontageEnded);
 			//printstring
 			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("montage_Play"));
 		}
@@ -177,9 +172,7 @@ float AMyPlayableCharacter::HitLinetrace()
 		{
 			//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("True"));
 			Doonce = true;
-
 			HitedActor(HitDamage, ReturnLintrece, MyHitResult.GetActor());
-			
 		}
 		else
 		{
@@ -195,7 +188,6 @@ float AMyPlayableCharacter::HitLinetrace()
 
 float AMyPlayableCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)
 {
-
 	Super::HitedActor(Hitdamaged, Trace, DamagedActor);
 	if (DamagedActor&&Trace)
 	{
@@ -207,11 +199,17 @@ float AMyPlayableCharacter::HitedActor(float Hitdamaged, bool Trace, AActor* Dam
 	return 0.0f;
 }
 
-void AMyPlayableCharacter::MyReset(UAnimInstance* AnimMontage, bool bInterrupted)
+void AMyPlayableCharacter::OnMontageEnded(UAnimMontage* Montage, bool Value)
 {
-	Doonce = false;
-	bIsAttack = false;
+	
+	Doonce = Value;
+	bIsAttack = Value;
 	this->GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+	if (!Doonce)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("OnAddDynamic"));
+		AnimInstance->OnMontageEnded.RemoveDynamic(this, &AMyPlayableCharacter::OnMontageEnded);
+	}
 }
 
 

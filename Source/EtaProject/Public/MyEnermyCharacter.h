@@ -17,8 +17,11 @@ class ETAPROJECT_API AMyEnermyCharacter : public AMyBaseCharacter
 public:
 
 	AMyEnermyCharacter();
+	UFUNCTION()
 	virtual float HitedActor(float Hitdamaged, bool Trace, AActor* DamagedActor)override;
 	virtual void Tick(float DeltaTime) override;
+
+	friend class MyplayableCharacter;
 
 	
 };

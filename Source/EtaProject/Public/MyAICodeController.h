@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include <Perception/AIPerceptionTypes.h>
 #include "MyAICodeController.generated.h"
+
 
 
 class UBehaviorTree;
@@ -20,12 +22,13 @@ class ETAPROJECT_API AMyAICodeController : public AAIController
 
 public:
 	AMyAICodeController();
+	UFUNCTION(BlueprintCallable)
 	virtual void OnPossess(APawn* MyPawn)override;
 	UFUNCTION()
 	void OnTargetPerceptionUpdated_Delegate(AActor* Actor,FAIStimulus stimulus);
 	virtual void BeginPlay() override;
 
-	//
+	//check
 	class UAISenseConfig_Sight* Sight;
 	//
 	void StartEnermyTimer(bool Invalue, UObject* objectvalue);
