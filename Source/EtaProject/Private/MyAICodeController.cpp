@@ -12,8 +12,7 @@
 
 AMyAICodeController::AMyAICodeController()
 {
-	AMyEnermyCharacter* MyEnermy = Cast<AMyEnermyCharacter>(this);
-	FAIStimulus Mystimulus;
+	
 }
 
 void AMyAICodeController::OnPossess(APawn* MyPawn)
@@ -21,7 +20,8 @@ void AMyAICodeController::OnPossess(APawn* MyPawn)
 	Super::OnPossess(MyPawn);
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("OnPossess"));
 	this->RunBehaviorTree(BTAsset);
-	AIPerceptioncompoenet->OnTargetPerceptionUpdated.AddDynamic(this,&AMyAICodeController::OnTargetPerceptionUpdated_Delegate);
+	//OnTargetPerceptionUpdated_Delegate(MyPawn, Mystimulus);
+	
 }
 
 void AMyAICodeController::OnTargetPerceptionUpdated_Delegate(AActor* Actor, FAIStimulus stimulus)

@@ -24,18 +24,17 @@ void AMyHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (WidgetClass != nullptr)
+	if (WidgetClass)
 	{
 		MainWidget = CreateWidget<UMyMainWidget>(GetWorld(), WidgetClass);
-
-		if (MainWidget != nullptr)
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("WidgetClass-Invaild"));
+		if (MainWidget)
 		{
 			MainWidget->AddToViewport();
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("HudOn"));
+		
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("HudOff"));
 		}
 	}
 	//create widget&make REF

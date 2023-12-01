@@ -22,7 +22,7 @@ class ETAPROJECT_API AMyAICodeController : public AAIController
 
 public:
 	AMyAICodeController();
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	virtual void OnPossess(APawn* MyPawn)override;
 	UFUNCTION()
 	void OnTargetPerceptionUpdated_Delegate(AActor* Actor,FAIStimulus stimulus);
@@ -32,6 +32,7 @@ public:
 	class UAISenseConfig_Sight* Sight;
 	//
 	void StartEnermyTimer(bool Invalue, UObject* objectvalue);
+
 	
 
 protected:
@@ -42,7 +43,7 @@ protected:
 	UBlackboardComponent* MyblackBoard = GetBlackboardComponent();
 	UPROPERTY(VisibleAnywhere, Category = "AI")
 	UAIPerceptionComponent* AIPerceptioncompoenet;
-	
+	FAIStimulus Mystimulus;
 
 private:
 

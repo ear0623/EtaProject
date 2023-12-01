@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MyEnermyCharacter.h"
 #include "GameFramework/DamageType.h"
+#include "UObject/ObjectMacros.h"
 
 
 
@@ -34,6 +35,7 @@ AMyPlayableCharacter::AMyPlayableCharacter()
 
 
 	CurrentAttackCombo = AttackCombo::None;
+
 }
 
 void AMyPlayableCharacter::Tick(float DeltaTime)
@@ -190,7 +192,7 @@ float AMyPlayableCharacter::TakeDamage(float DamageAmount, FDamageEvent const& D
 	if (DamageCauser)
 	{
 		AMyEnermyCharacter* MyEnermy = Cast<AMyEnermyCharacter>(DamageCauser);
-		if (MyEnermy)
+		if (MyEnermy&&MyDamageType)
 		{
 			MyEnermy->ReceiveAnyDamage(DamageAmount, MyDamageType, EventInstigator, DamageCauser);
 			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("DamageCauser_True"));
