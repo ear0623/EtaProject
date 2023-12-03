@@ -72,7 +72,7 @@ public:
 	virtual void AttackAction()override;
 	//
 	//
-	UDamageType* MyDamageType = NewObject<UDamageType>();
+	
 
 
 	UFUNCTION(BlueprintCallable)

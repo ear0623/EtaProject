@@ -7,6 +7,8 @@
 #include "UWidgetInterface.h"
 #include "MyMainWidget.generated.h"
 
+class ULevelStreaming;
+
 /**
  * 
  */
@@ -89,4 +91,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void Back()override;
+
+	//Level
 };

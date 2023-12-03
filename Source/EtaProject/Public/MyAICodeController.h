@@ -24,26 +24,22 @@ public:
 	AMyAICodeController();
 	UFUNCTION()
 	virtual void OnPossess(APawn* MyPawn)override;
-	UFUNCTION()
-	void OnTargetPerceptionUpdated_Delegate(AActor* Actor,FAIStimulus stimulus);
 	virtual void BeginPlay() override;
-
-	//check
-	class UAISenseConfig_Sight* Sight;
-	//
+	//timer
 	void StartEnermyTimer(bool Invalue, UObject* objectvalue);
+	//
+	//component
+	UAIPerceptionComponent* MyAIPerceptionCompoenet;
+	UFUNCTION()
+	void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 
 	
 
 protected:
 	UBehaviorTree* BTAsset;
-	UPROPERTY(VisibleAnywhere, Category="AI")
-	//TObjectPtr<UAIPerceptionComponent> AIPerceptionComponent = nullptr;
-	//TObjectPtr<UBlackboardComponent> BlackboardComponent = nullptr;
 	UBlackboardComponent* MyblackBoard = GetBlackboardComponent();
-	UPROPERTY(VisibleAnywhere, Category = "AI")
-	UAIPerceptionComponent* AIPerceptioncompoenet;
 	FAIStimulus Mystimulus;
+
 
 private:
 

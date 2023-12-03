@@ -192,10 +192,17 @@ float AMyPlayableCharacter::TakeDamage(float DamageAmount, FDamageEvent const& D
 	if (DamageCauser)
 	{
 		AMyEnermyCharacter* MyEnermy = Cast<AMyEnermyCharacter>(DamageCauser);
+		UDamageType* MyDamageType = NewObject<UDamageType>();
+
 		if (MyEnermy&&MyDamageType)
 		{
-			MyEnermy->ReceiveAnyDamage(DamageAmount, MyDamageType, EventInstigator, DamageCauser);
+			MyEnermy->ReceiveAnyDamage(DamageAmount,MyDamageType,EventInstigator, DamageCauser);
 			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("DamageCauser_True"));
+			if (MyDamageType)
+			{
+				MyDamageType->ConditionalBeginDestroy();
+				MyDamageType = nullptr;
+			}
 		}
 		
 	}

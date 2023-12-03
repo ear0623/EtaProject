@@ -12,36 +12,24 @@
 
 AMyAICodeController::AMyAICodeController()
 {
-	
+	MyAIPerceptionCompoenet = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPercetion"));
 }
 
 void AMyAICodeController::OnPossess(APawn* MyPawn)
 {
 	Super::OnPossess(MyPawn);
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("OnPossess"));
 	this->RunBehaviorTree(BTAsset);
-	//OnTargetPerceptionUpdated_Delegate(MyPawn, Mystimulus);
-	
-}
-
-void AMyAICodeController::OnTargetPerceptionUpdated_Delegate(AActor* Actor, FAIStimulus stimulus)
-{
-	Actor->ActorHasTag("Player");
-	FTimerHandle TimerHandle;
-	FTimerDynamicDelegate DynamicTimer;
-	UObject* ObjectValue = nullptr;
-	if (stimulus.WasSuccessfullySensed())
+	//인식 업데이트
+	if (MyAIPerceptionCompoenet)
 	{
-		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
-		StartEnermyTimer(true, Actor);
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("AI"));
+		MyAIPerceptionCompoenet->OnTargetPerceptionUpdated.AddDynamic(this, &AMyAICodeController::OnTargetPerceptionUpdated);
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("OnPossess"));
 	}
 	else
 	{
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle,DynamicTimer, 1.0f, false, 4.0f);
-		StartEnermyTimer(false,ObjectValue);
-	}
 
+	}
+	OnTargetPerceptionUpdated(MyPawn,Mystimulus);
 }
 
 void AMyAICodeController::BeginPlay()
@@ -55,4 +43,10 @@ void AMyAICodeController::StartEnermyTimer(bool InValue, UObject* objectvalue)
 {
 	MyblackBoard->SetValueAsBool("HasLineOfSight", InValue);
 	MyblackBoard->SetValueAsObject("EnermyActor",objectvalue);
+}
+
+void AMyAICodeController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+{
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, TEXT("OnTargetPerceptionUpdate"));
 }

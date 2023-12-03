@@ -7,6 +7,8 @@
 #include "UObject/Object.h"
 #include "MyMainWidget.h"
 #include "MyPlayerController.h"
+#include "IngameWidget.h"
+#include "Blueprint/UserWidget.h"
 #include "MyHUD.generated.h"
 
 /**
@@ -21,16 +23,11 @@ class ETAPROJECT_API AMyHUD : public AHUD
 
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "class Types")
-	TSubclassOf<UUserWidget> WidgetClass;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Runtime")
-	class UMyMainWidget* MainWidget;
-
-
-	virtual void BeginPlay() override;
-	
-
+	TSubclassOf<UMyMainWidget> MainWidget;
+	TSubclassOf<UIngameWidget> IngameWidget;
 	AMyPlayerController* MyplayerController;
+	virtual void BeginPlay() override;
+
+	UUserWidget* MyWidget;
 	
 };

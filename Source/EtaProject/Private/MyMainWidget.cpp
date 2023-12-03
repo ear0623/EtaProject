@@ -7,16 +7,18 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Components/VerticalBox.h"
 #include "GameFramework/GameUserSettings.h"
+#include "Engine/LevelStreaming.h"
+#include "Engine/LevelStreamingDynamic.h"
 
 
 
 void UMyMainWidget::FStartLevel()
 {
-	FString FindLevelName = TEXT("MyFindLevelName_") + FGuid::NewGuid().ToString();
+	//FString FindLevelName = TEXT("/MyContents/Eta/Maps/Stage001.umap") + FGuid::NewGuid().ToString();
+	FString FirstStage =TEXT("Stage001");
+	FName Stage01(*FirstStage);
 
-	FName LevelName(*FindLevelName);
-
-	UGameplayStatics::OpenLevel(GetWorld(),LevelName, true, FString("Optional"));
+	UGameplayStatics::OpenLevel(GetWorld(),Stage01, true, FString("Optional"));
 
 	//StartButton
 }
