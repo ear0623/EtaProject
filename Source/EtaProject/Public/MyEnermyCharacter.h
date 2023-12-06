@@ -6,6 +6,7 @@
 #include "MyBaseCharacter.h"
 #include "MyEnermyCharacter.generated.h"
 
+class AActor;
 /**
  * 
  */
@@ -21,6 +22,12 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)override;
 	virtual void ReceiveAnyDamage(float Damage, const class UDamageType* DamageType, class AController* Instigatedby, AActor* DamagedCauser)override;
 
+	UFUNCTION(BlueprintCallable)
+	virtual float HitLinetrace() override;
+
+protected:
+	
+	AActor* Actor;
 
 	
 };
